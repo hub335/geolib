@@ -31,5 +31,5 @@ Libraries/Functions/Utilities I often require in other projects!
 
 	func main() {
 		haversine_distance := fmt.Sprintf("%2.f", geolib.Haversine_Distance(50.116667, 8.683333, 52.516667, 13.3833))
-		println("Havesine Distance:", haversine_distance, "km")
+		println("Haversine Distance:", haversine_distance, "km")
 	}
