@@ -17,3 +17,4 @@ _cgo_export.*
 _testmain.go
 
 src
+.DS_Store
