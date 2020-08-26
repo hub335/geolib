@@ -1,12 +1,17 @@
-cov:
-	gocov test ./... | gocov report
+# Go parameters
+GOCMD=go
+GOTEST=$(GOCMD) test -count=1
+GOMOD=$(GOCMD) mod
+GOGET=$(GOCMD) get
+GOUPGRADE=$(GOCMD) get -u
+GOFORMAT=go list -f {{.Dir}} ./... | xargs gofmt -s -w -d
 
-test:
-	go test -v ./...
+.PHONY: test
+test: 
+	@$(GOTEST) -timeout 3s -v ./...
 
-annotate:
-	FILENAME=$(shell uuidgen)
-	gocov test > /tmp/--go-test-server-coverage.json
-	gocov annotate /tmp/--go-test-server-coverage.json $(fn)
-
-.PNONY: test cov annotate
+.PHONY: fmt
+fmt:
+	@echo tidying and formatting go code
+	@$(GOMOD) tidy
+	@$(GOFORMAT)
