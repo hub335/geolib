@@ -1,35 +1,43 @@
-go-geolib
-=========
-
-[![Build Status](https://travis-ci.org/alouche/go-geolib.svg?branch=master)](https://travis-ci.org/alouche/go-geolib)
-[![Go Report Card](https://goreportcard.com/badge/github.com/alouche/go-geolib)](https://goreportcard.com/report/github.com/alouche/go-geolib)
-[![GoDoc](https://godoc.org/github.com/alouche/go-geolib?status.png)](https://godoc.org/github.com/alouche/go-geolib)
+# geolib
 
 ## About
 
-Geographical functions for Golang apps!
+Geographical functions
 
-## Scope
-Libraries/Functions/Utilities I often require in other projects!
+## Installation
 
-## installation
+```bash
+$ go get github.com/hub335/geolib
+```
 
-	go get github.com/alouche/go-geolib
+## Example
 
-## API Documentation
+```go
+package main
 
-[API](https://godoc.org/github.com/alouche/go-geolib)
+import (
+	"fmt"
 
-## Example Usage
+	"github.com/hub335/geolib"
+)
 
-	package main																																												
+func main() {
+	fmt.Printf("Haversine Distance: %2.2f km\n", geolib.HaversineDistance(
+		50.116667, 8.683333, 
+		52.516667, 13.3833))
+}
+```
 
-	import (
-		"fmt"
-		"github.com/alouche/go-geolib"
-	)
+```bash
+$ go get github.com/hub335/geolib
+$ go run example.go
+Haversine Distance: 422.77 km
 
-	func main() {
-		haversine_distance := fmt.Sprintf("%2.f", geolib.Haversine_Distance(50.116667, 8.683333, 52.516667, 13.3833))
-		println("Haversine Distance:", haversine_distance, "km")
-	}
+```
+
+## Thanks
+
+This repo is a fork of the awesome original work contributed by [@alouche](github.com/alouche). 
+
+For more information, see the original repository at:
+		https://github.com/alouche/go-geolib
