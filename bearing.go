@@ -1,18 +1,19 @@
 package geolib
 
 import (
-	"errors"
 	"math"
 )
 
 // Bearing {from, to} a point
-// flag: 0    => Initial Bearing
-// flag: 1    => Initial Bearing
-// flag: nil  => Bearing
 // Result:
-//  - Type: float64
+//  - Type: float64 (initial bearing)
+//  - Type: float64 (final bearing)
 //  - Metric: Degress from North
-func Bearing(flag int, φ1, λ1, φ2, λ2 float64) (float64, error) {
+func Bearing(φ1, λ1, φ2, λ2 float64) (float64, float64) {
+	return initial(φ1, λ1, φ2, λ2), final(φ2, λ2, φ1, λ1)
+}
+
+func initial(φ1, λ1, φ2, λ2 float64) float64 {
 	φ1 = Deg2Rad(φ1)
 	φ2 = Deg2Rad(φ2)
 
@@ -23,16 +24,19 @@ func Bearing(flag int, φ1, λ1, φ2, λ2 float64) (float64, error) {
 			math.Sin(
 				Δλ)*math.Cos(φ2), math.Cos(φ1)*math.Sin(φ2)-math.Sin(φ1)*math.Cos(φ2)*math.Cos(Δλ)))
 
-	var incDeg float64
+	return math.Mod(bearing+360, 360)
+}
 
-	switch flag {
-	case 0:
-		incDeg = 360
-	case 1:
-		incDeg = 180
-	default:
-		return -1, errors.New("flag not supported")
-	}
+func final(φ1, λ1, φ2, λ2 float64) float64 {
+	φ1 = Deg2Rad(φ1)
+	φ2 = Deg2Rad(φ2)
 
-	return math.Mod(bearing+incDeg, 360), nil
+	Δλ := Deg2Rad(λ2 - λ1)
+
+	bearing := Rad2Deg(
+		math.Atan2(
+			math.Sin(
+				Δλ)*math.Cos(φ2), math.Cos(φ1)*math.Sin(φ2)-math.Sin(φ1)*math.Cos(φ2)*math.Cos(Δλ)))
+
+	return math.Mod(bearing+180, 360)
 }
